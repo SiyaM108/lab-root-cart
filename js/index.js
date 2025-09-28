@@ -21,14 +21,15 @@ function calculateAll() {
   // ITERATION 2
   //... your code goes here
   const products = document.getElementsByClassName('product');
+
+  // ITERATION 3
+  //... your code goes here
   let total = 0;
   for (let i = 0; i < products.length; i++) {
     total += updateSubtotal(products[i]);
   }
   document.querySelector('#total-value span').innerText = total;
 
-  // ITERATION 3
-  //... your code goes here
 }
 
 // ITERATION 4
@@ -37,6 +38,9 @@ function removeProduct(event) {
   const target = event.currentTarget;
   console.log('The target in remove is:', target);
   //... your code goes here
+  const productRow = target.closest('.product');
+  productRow.remove();
+  calculateAll();
 }
 
 // ITERATION 5
