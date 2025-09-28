@@ -47,6 +47,44 @@ function removeProduct(event) {
 
 function createProduct() {
   //... your code goes here
+  const createRow = document.querySelector('.create-product');
+  const nameInput = createRow.querySelector('input[type="text"]');
+  const priceInput = createRow.querySelector('input[type="number"]');
+
+  const name = nameInput.value;
+  const price = parseFloat(priceInput.value).toFixed(2);
+
+  if (name === '' || isNaN(price) || price <= 0) {
+    alert('Please enter a valid product name and price.');
+    return;
+  }
+
+  const tableBody = document.querySelector('#cart tbody');
+  const newRow = document.createElement('tr');
+  newRow.classList.add('product');
+  newRow.innerHTML = `
+    <td class="name">
+      <span>${name}</span>
+    </td>
+    <td class="price">$<span>${price}</span></td>
+    <td class="quantity">
+      <input type="number" value="0" min="0" placeholder="Quantity" />
+    </td>
+    <td class="subtotal">$<span>0</span></td>
+    <td class="action">
+      <button class="btn btn-remove">Remove</button>
+    </td>
+  `;
+
+  tableBody.appendChild(newRow);
+
+  // Clear input fields
+  nameInput.value = '';
+  priceInput.value = '';
+
+  // Add event listener to the new remove button
+  const removeBtn = newRow.querySelector('.btn-remove');
+  removeBtn.addEventListener('click', removeProduct);
 }
 
 window.addEventListener('load', () => {
@@ -54,4 +92,10 @@ window.addEventListener('load', () => {
   calculatePricesBtn.addEventListener('click', calculateAll);
 
   //... your code goes here
+  const removeButtons = document.getElementsByClassName('btn-remove');
+  for (let i = 0; i < removeButtons.length; i++) {
+    removeButtons[i].addEventListener('click', removeProduct);
+  }
+
+  const createButton = document.getElementById('create');
 });
